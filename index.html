@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #CD6688 !important;
+    padding: 50px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    color: #ff69b4;
+}
+
+main {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.left-section img {
+    width: 300px;
+    border-radius: 50%;
+}
+
+.right-section {
+    width: 60%;
+}
+
+button {
+    background-color: #ff69b4;
+    color: white;
+    padding: 10px 20px;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #ff4081;
+}
+/* ... CSS styles as before ... */
+
+.balloon-animation {
+    position: relative;
+    animation: moveBalloons 10s infinite;
+}
+
+.balloon {
+    position: absolute;
+    width: 80px;
+    animation: floatBalloon 4s infinite;
+}
+
+@keyframes moveBalloons {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(200px); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes floatBalloon {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0); }
+}
+/* ... CSS styles as before ... */
+
+#hiddenMessage {
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid #000;
+    padding-right: 5px;
+    animation: typing 3s steps(40) 1s 1 normal both,
+               blink-caret 1s step-end infinite;
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes blink-caret {
+    from,
+    to {
+        border-color: transparent;
+    }
+    50% {
+        border-color: black;
+    }
+}
+#overlay {
+    position: fixed; /* Sit on top of the page content */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #CD6688; /* Black background with opacity */
+    z-index: 9999999; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+    opacity: 1; /* Initial opacity */
+    transition: opacity 2s ease; /* Transition effect with 0.5 seconds duration and ease timing function */
+}
+
+#overlay.fade-out {
+    opacity: 0; /* Change opacity to 0 when the "fade-out" class is added */
+}
+.zindx{
+    z-index: -1 !important;
+}
+#text{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 50px;
+  color: white;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+}
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, My Love!</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="overlay" id="overlay"><button class="ovrlybtn" id="text" onclick="off()">Happy Birthday, My Love!</button></div>
+    <div class="container">
+        <header>
+            <h1>Happy Birthday, My Love!</h1>
+        </header>
+        <main>
+            <div class="left-section"> 
+                <img id="birthdayImage" alt="Happy Birthday">
+                <div id="balloons" class="balloon-animation">
+                    <img src="balloon.png" class="balloon" id="balloon1">
+                </div>
+            </div>
+            
+            <div class="right-section">
+                <h2>A Special Message for You</h2>
+                <p>On this wonderful day, I want to express my deepest affection for you. Your presence in my life is a blessing I am infinitely grateful for. Your laughter is my favorite melody, your smile is my daily motivation, and your love is the reason I am who I am.</p>
+                <p>Today is not just a celebration of your birth; it's a celebration of you - your kindness, your strength, and the incredible person you are. I feel incredibly fortunate to share this journey of life with you.</p>
+                <p>Happy 21st birthday, my love! As you step into this exciting chapter of your life, I hope it’s filled with incredible adventures, dreams fulfilled, and endless joy. Thank you for bringing so much love and happiness into my life. I love you more than words can express.</p>
+                <button id="showMessageBtn">Show Me More Love!</button>
+                <p id="hiddenMessage"></p>
+            </div>
+        </main>
+    </div>
+    <audio controls id="myAudio" style="display: none;">
+        <source src="E:\codes\21th\Luke Chiang - Home ( Lirik Lagu Terjemahan ).mp3" type="audio/mpeg">
+    </audio>
+    <script>
+var imageIndex = 0;
+var messageIndex = 0;
+
+var images = [
+    "E:\\codes\\21th\\birthday_images.jpg",
+    "E:\\codes\\21th\\birthday_images2.jpg",
+    "E:\\codes\\21th\\birthday_images3.jpg"
+];
+
+var messages = [
+    "You fill my life with endless joy and love.",
+    "Your presence is a gift I cherish every day.",
+    "Every moment with you is a treasure.",
+    "You are not just my love you are my life."
+];
+
+var imageElement = document.getElementById("birthdayImage");
+var hiddenMessage = document.getElementById("hiddenMessage");
+
+function changeImage() {
+    imageElement.src = images[imageIndex];
+    imageIndex = (imageIndex + 1) % images.length;
+}
+imageElement.src = images[0];
+function typeMessage() {
+    if (messageIndex < messages.length) {
+        var message = messages[messageIndex];
+        var messageArray = message.split("");
+        var currentCharacter = 0;
+
+        function typeCharacter() {
+            if (currentCharacter < messageArray.length) {
+                hiddenMessage.textContent += messageArray[currentCharacter];
+                currentCharacter++;
+                setTimeout(typeCharacter, 50); // Adjust typing speed here (in milliseconds)
+            } else {
+                messageIndex++;
+                if (messageIndex < messages.length) {
+                    setTimeout(eraseMessage, 1000); // Wait before erasing
+                } else {
+                    // All messages displayed, restart animation
+                    setTimeout(restartAnimation, 2000); // Wait before restarting animation
+                }
+            }
+        }
+
+        typeCharacter();
+    }
+    document.getElementById("showMessageBtn").disabled = false;
+}
+
+function eraseMessage() {
+    var messageText = hiddenMessage.textContent;
+    var messageArray = messageText.split("");
+    var currentCharacter = messageArray.length - 1;
+
+    function eraseCharacter() {
+        if (currentCharacter >= 0) {
+            hiddenMessage.textContent = messageText.slice(0, currentCharacter);
+            currentCharacter--;
+            setTimeout(eraseCharacter, 30); // Adjust erasing speed here (in milliseconds)
+        } else {
+            typeMessage();
+        }
+    }
+
+    eraseCharacter();
+}
+
+    function restartAnimation() {
+        messageIndex = 0;
+        hiddenMessage.textContent = "";
+        typeMessage();
+    }
+
+    document.getElementById("showMessageBtn").addEventListener("click", function() {
+        typeMessage();
+        document.getElementById("showMessageBtn").disabled = true;
+
+        
+    });
+
+    // Mengganti gambar setiap 3 detik (3000 milidetik)
+    setInterval(changeImage, 3000);
+
+    document.addEventListener("DOMContentLoaded", function() {
+        // Memutarkan audio saat halaman dimuat (opsional)
+        var audio = document.getElementById("myAudio");
+        audio.play().catch(function(error) {
+            // Tangani kesalahan pemutaran audio di sini, jika diperlukan
+            console.error("Error playing audio: " + error);
+        });
+    });
+
+    function off() {
+        document.getElementById("overlay").classList.add("fade-out");
+        setInterval(function() {
+            document.getElementById("overlay").classList.add("zindx");
+        }, 2000);
+        //document.getElementById("overlay").classList.add("zindx");
+        // Memutarkan audio saat tombol ditekan
+        var audio = document.getElementById("myAudio");
+        audio.play().catch(function(error) {
+            // Tangani kesalahan pemutaran audio di sini, jika diperlukan
+            console.error("Error playing audio: " + error);
+        });
+        //document.getElementById("overlay").style.display = "none";
+    }
+    </script>
+</body>
+
+</html>
